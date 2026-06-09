@@ -8,19 +8,92 @@
     <title>ToiletKu - Beranda</title>
 </head>
 <body>
-    <header class="flex items-center justify-between py-4 px-8">
+    <header class="flex items-center justify-between py-4 px-8 border-b border-gray-100">
         <h1 class="text-2xl font-bold text-green-700">ToiletKu</h1>
         <nav class="flex items-center gap-8">
-            <a href="">Beranda</a>
-            <a href="">Produk</a>
-            <a href="">Harga</a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors duration-200 text-sm">Beranda</a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors duration-200 text-sm">Produk</a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors duration-200 text-sm">Harga</a>
         </nav>
     </header>
+
     <main>
-        <section class="flex flex-col items-center justify-center h-screen bg-green-100">
-            <h2>Selamat Datang di ToiletKu</h2>
-            <p>Solusi terbaik untuk kebutuhan toilet Anda!</p>
+        <section class="relative flex flex-col items-center justify-center min-h-[380px] bg-green-50 overflow-hidden py-16 px-8">
+            
+            <svg class="absolute right-[8%] top-1/2 -translate-y-1/2 opacity-[0.07] pointer-events-none" width="260" height="300" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="80" y="10" width="100" height="60" rx="12" stroke="#15803d" stroke-width="5" fill="none"/>
+                <rect x="88" y="20" width="84" height="12" rx="4" stroke="#15803d" stroke-width="3" fill="none"/>
+                <path d="M60 70 Q60 80 80 80 L180 80 Q200 80 200 70" stroke="#15803d" stroke-width="5" fill="none"/>
+                <path d="M75 80 Q60 130 55 170 Q50 210 80 230 Q110 250 130 250 Q150 250 180 230 Q210 210 205 170 Q200 130 185 80" stroke="#15803d" stroke-width="5" fill="none"/>
+                <ellipse cx="130" cy="175" rx="55" ry="70" stroke="#15803d" stroke-width="3" stroke-dasharray="6 4" fill="none"/>
+                <rect x="55" y="245" width="150" height="20" rx="6" stroke="#15803d" stroke-width="4" fill="none"/>
+                <rect x="45" y="262" width="170" height="14" rx="5" stroke="#15803d" stroke-width="3" fill="none"/>
+                <line x1="130" y1="70" x2="130" y2="80" stroke="#15803d" stroke-width="4"/>
+            </svg>
+
+            <div class="relative z-10 text-center max-w-xl">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">Selamat Datang di ToiletKu</h2>
+                <p class="text-gray-500 mb-6">Solusi terbaik untuk kebutuhan toilet Anda!</p>
+                <button class="bg-green-700 text-white font-medium py-2.5 px-8 rounded-full hover:bg-green-800 transition-colors duration-200">
+                    Mulai sekarang
+                </button>
+            </div>
+        </section>
+
+        <section id="fitur" class="py-16 px-8 max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <p class="text-xs text-green-700 font-bold uppercase tracking-widest mb-2">Fitur Utama</p>
+                <h3 class="text-2xl font-bold text-gray-900">Eksplorasi Fitur ToiletKu</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between min-h-[210px]">
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Pencarian Lokasi</h4>
+                        <p class="text-sm text-gray-500 mb-6">Temukan toilet terdekat dari posisimu saat ini secara real-time.</p>
+                    </div>
+                    <button class="w-full bg-green-700 text-white font-medium py-2 rounded-xl text-sm hover:bg-green-800 transition-colors cursor-pointer">
+                        Cari Sekarang
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between min-h-[210px]">
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Rating & Ulasan</h4>
+                        <p class="text-sm text-gray-500 mb-6">Lihat tingkat kebersihan berdasarkan ulasan pengguna lain.</p>
+                    </div>
+                    <button class="w-full bg-green-700 text-white font-medium py-2 rounded-xl text-sm hover:bg-green-800 transition-colors cursor-pointer">
+                        Lihat Ulasan
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between min-h-[210px]">
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Laporan Fasilitas</h4>
+                        <p class="text-sm text-gray-500 mb-6">Info ketersediaan air bersih, sabun, hingga akses disabilitas.</p>
+                    </div>
+                    <button class="w-full bg-green-700 text-white font-medium py-2 rounded-xl text-sm hover:bg-green-800 transition-colors cursor-pointer">
+                        Laporkan
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between min-h-[210px]">
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Bayar Non-Tunai</h4>
+                        <p class="text-sm text-gray-500 mb-6">Bayar retribusi toilet premium dengan scan QRIS cepat.</p>
+                    </div>
+                    <button class="w-full bg-green-700 text-white font-medium py-2 rounded-xl text-sm hover:bg-green-800 transition-colors cursor-pointer">
+                        Scan QRIS
+                    </button>
+                </div>
+
+            </div>
         </section>
     </main>
+
+    <footer class="border-t border-gray-500 py-6 px-8 text-center">
+        <p class="text-xs text-gray-400">&copy; 2025 ToiletKu. All rights reserved.</p>
+    </footer>
 </body>
 </html>
