@@ -1,23 +1,55 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { apiClient } from '../lib/apiClient.js'
+
+const STORAGE_KEY = 'toiletku_user'
+
+const getSavedUser = () => {
+  const savedUser = localStorage.getItem(STORAGE_KEY)
+  return savedUser ? JSON.parse(savedUser) : null
+}
 
 export function useLogin() {
-  const [user, setUser] = useState(null)
-  const [message, setMessage] = useState('')
+  const [user, setUser] = useState(getSavedUser)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const login = ({ name, role }) => {
-    const nextUser = {
-      name: name || 'Petugas ToiletKu',
-      role: role || 'Petugas Kebersihan',
+  useEffect(() => {
+    const syncUser = () => {
+      setUser(getSavedUser())
     }
 
-    setUser(nextUser)
-    setMessage(`Halo ${nextUser.name}, dashboard toilet sudah siap dipantau.`)
+    window.addEventListener('toiletku-auth-change', syncUser)
+
+    return () => {
+      window.removeEventListener('toiletku-auth-change', syncUser)
+    }
+  }, [])
+
+  const login = async (credentials) => {
+    try {
+      setLoading(true)
+      setError(null)
+
+      const response = await apiClient.post('/login', credentials)
+      setUser(response.user)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(response.user))
+      window.dispatchEvent(new Event('toiletku-auth-change'))
+      return response.user
+    } catch (err) {
+      setError(err)
+      setUser(null)
+      return null
+    } finally {
+      setLoading(false)
+    }
   }
 
   const logout = () => {
+    localStorage.removeItem(STORAGE_KEY)
     setUser(null)
-    setMessage('')
+    setError(null)
+    window.dispatchEvent(new Event('toiletku-auth-change'))
   }
 
-  return { user, message, login, logout }
+  return { user, loading, error, login, logout }
 }
