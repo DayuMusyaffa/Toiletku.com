@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #183034;
+    background: #f3fbfb;
+    font-synthesis: none;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+      linear-gradient(135deg, rgba(30, 144, 171, 0.16), transparent 30%),
+      linear-gradient(315deg, rgba(255, 197, 74, 0.2), transparent 26%),
+      #f3fbfb;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-[min(1180px,calc(100%-32px))];
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-xs font-black uppercase tracking-normal text-pool;
+  }
+
+  .button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/15 bg-white px-5 font-black text-ink transition hover:-translate-y-0.5 hover:shadow-soft;
+  }
+
+  .button-primary {
+    @apply border-ink bg-ink text-white shadow-sticker hover:bg-[#0f2529];
+  }
+
+  .card {
+    @apply rounded-lg border border-ink/10 bg-white/90 shadow-soft;
+  }
+
+  .icon-box {
+    @apply grid h-12 w-12 place-items-center rounded-lg bg-cyan-50 text-pool;
+  }
+
+  .status-dot {
+    @apply h-3 w-3 rounded;
+  }
+}
