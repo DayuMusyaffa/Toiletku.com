@@ -1,22 +1,23 @@
 import { ArrowRight, CheckCircle2, Droplets, ShieldCheck, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { hygieneHighlights } from '../data/toilets.js'
+import { getToiletStats, hygieneHighlights } from '../data/toilets.js'
 import ToiletIllustration from './ToiletIllustration.jsx'
 
 const Hero = () => {
+  const stats = getToiletStats()
+
   return (
     <section className="container-page grid min-h-[calc(100vh-86px)] items-center gap-8 py-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
       <div>
         <span className="eyebrow">
           <Sparkles size={16} />
-          Web toilet yang bersih, lucu, dan mudah dipakai
+          Mall modern, gedung terhubung, toilet yang mudah dipahami
         </span>
         <h1 className="max-w-3xl text-5xl font-black leading-[0.96] tracking-normal text-ink md:text-7xl lg:text-8xl">
-          Toilet nyaman untuk anak, keluarga, dan semua pengunjung.
+          Toilet nyaman di {stats.buildings} gedung untuk anak, keluarga, dan semua pengunjung.
         </h1>
         <p className="mt-5 max-w-2xl text-base text-slate-600 md:text-lg">
-          ToiletKu menampilkan lokasi, status kamar, dan panduan kebersihan dalam tampilan cerah bertema toilet
-          agar informasi penting terasa ringan untuk semua umur.
+          ToiletKu menampilkan area toilet, status kamar, dan panduan kebersihan dalam tampilan cerah agar informasi penting terasa ringan untuk semua umur.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <Link className="button button-primary" to="/monitoring">
@@ -58,7 +59,7 @@ const Hero = () => {
           <ShieldCheck size={25} />
         </div>
         <div className="absolute bottom-14 left-2 z-20 rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
-          <strong className="block text-2xl leading-none text-emerald-600">8</strong>
+          <strong className="block text-2xl leading-none text-emerald-600">{stats.kosong}</strong>
           <span className="block text-xs font-black text-slate-500">kamar siap dipakai</span>
         </div>
       </div>

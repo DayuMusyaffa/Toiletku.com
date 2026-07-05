@@ -316,9 +316,13 @@ export const facilities = malls.flatMap((mall) => mall.buildings.flatMap((buildi
 
 export function getToiletStats() {
   const rooms = facilities.flatMap((facility) => facility.rooms)
+  const mall = malls[0]
 
   return {
+    mall: mall?.name ?? 'Mall',
+    buildings: mall?.buildings.length ?? 0,
     area: facilities.length,
+    facilities: facilities.length,
     total: rooms.length,
     kosong: rooms.filter((room) => room.status === 'kosong').length,
     digunakan: rooms.filter((room) => room.status === 'digunakan').length,
