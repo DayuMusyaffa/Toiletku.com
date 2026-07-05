@@ -19,8 +19,12 @@ const MonitoringPage = () => {
             Tampilan ini mempertahankan fungsi utama: melihat kamar kosong, digunakan, dan maintenance di tiap area.
           </p>
         </div>
-        <div className="inline-flex h-10 w-fit items-center gap-2 rounded-lg bg-ink px-4 font-black text-white">
-          <Activity size={18} />
+        <div className="group inline-flex h-10 w-fit items-center gap-2 rounded-lg bg-ink px-4 font-black text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_rgba(24,48,52,0.18)]">
+          <span className="relative flex h-3 w-3">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-70" />
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-mint" />
+          </span>
+          <Activity className="transition duration-300 group-hover:rotate-12" size={18} />
           Live
         </div>
       </section>
@@ -41,24 +45,24 @@ const MonitoringPage = () => {
           ))}
         </div>
 
-        <aside className="card grid gap-4 p-5">
+        <aside className="card grid gap-4 p-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_24px_56px_rgba(24,48,52,0.14)]">
           <h2 className="text-lg font-black text-ink">Catatan petugas</h2>
-          <div className="grid grid-cols-[36px_minmax(0,1fr)] gap-3">
-            <DoorOpen className="text-pool" size={22} />
+          <div className="group grid grid-cols-[36px_minmax(0,1fr)] gap-3 rounded-lg p-2 transition duration-300 hover:bg-cyan-50">
+            <DoorOpen className="text-pool transition duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" size={22} />
             <div>
               <strong className="block">{stats.kosong} kamar kosong</strong>
               <span className="text-sm text-slate-600">Arahkan antrean ke area dengan warna hijau terbanyak.</span>
             </div>
           </div>
-          <div className="grid grid-cols-[36px_minmax(0,1fr)] gap-3">
-            <Brush className="text-pool" size={22} />
+          <div className="group grid grid-cols-[36px_minmax(0,1fr)] gap-3 rounded-lg p-2 transition duration-300 hover:bg-cyan-50">
+            <Brush className="text-pool transition duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" size={22} />
             <div>
               <strong className="block">Inspeksi visual</strong>
               <span className="text-sm text-slate-600">Gunakan checklist kebersihan sebelum jam ramai.</span>
             </div>
           </div>
-          <div className="grid grid-cols-[36px_minmax(0,1fr)] gap-3">
-            <Wrench className="text-pool" size={22} />
+          <div className="group grid grid-cols-[36px_minmax(0,1fr)] gap-3 rounded-lg p-2 transition duration-300 hover:bg-cyan-50">
+            <Wrench className="text-pool transition duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" size={22} />
             <div>
               <strong className="block">{stats.maintenance} maintenance</strong>
               <span className="text-sm text-slate-600">Pasang tanda sementara dan prioritaskan perbaikan ringan.</span>
