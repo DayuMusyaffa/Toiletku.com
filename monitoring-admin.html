@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Load Chart.js (Opsional jika nanti mau tambah grafik) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>ToiletKu - Admin Monitoring</title>
+</head>
+<body class="bg-green-50 text-gray-800 font-sans min-h-screen">
+    
+    <!-- Navbar / Header -->
+    <header class="flex items-center justify-between py-4 px-8 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <h1 class="text-2xl font-bold text-green-700 tracking-tight">ToiletKu</h1>
+            <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Admin Dashboard</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]"></div>
+            <span class="text-sm font-semibold text-gray-600">Sistem Online & Stabil</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-8 max-w-7xl mx-auto">
+        <div class="mb-8 flex justify-between items-end">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Live Monitoring Fasilitas</h2>
+                <p class="text-gray-500 text-sm">Pemantauan metrik aplikasi dan status keluhan pengguna secara real-time.</p>
+            </div>
+            <div class="text-sm text-gray-400 font-medium bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-100">
+                Update Terakhir: <span id="waktu-update" class="text-gray-700">00:00:00</span>
+            </div>
+        </div>
+
+        <!-- 4 Kartu Metrik Utama -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Card 1 -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Pengguna Aktif</p>
+                    <span class="text-green-500 bg-green-50 p-1 rounded">👤</span>
+                </div>
+                <h3 class="text-4xl font-black text-gray-900" id="ui-users">124</h3>
+                <p class="text-xs text-green-600 mt-2 font-medium">↑ Sedang ramai</p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Pendapatan QRIS</p>
+                    <span class="text-blue-500 bg-blue-50 p-1 rounded">💳</span>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 mt-2" id="ui-qris">Rp 850.000</h3>
+                <p class="text-xs text-gray-400 mt-2 font-medium" id="ui-transaksi">142 Transaksi hari ini</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Laporan Masuk</p>
+                    <span class="text-orange-500 bg-orange-50 p-1 rounded">⚠️</span>
+                </div>
+                <h3 class="text-4xl font-black text-red-600" id="ui-reports">3</h3>
+                <p class="text-xs text-red-500 mt-2 font-medium">Butuh penanganan segera</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Beban Server</p>
+                    <span class="text-purple-500 bg-purple-50 p-1 rounded">💻</span>
+                </div>
+                <div class="flex items-center gap-3 mt-1">
+                    <h3 class="text-4xl font-black text-gray-900" id="ui-cpu">32%</h3>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2 mt-3 overflow-hidden">
+                    <div id="ui-cpu-bar" class="bg-green-500 h-2 rounded-full transition-all duration-700 ease-out" style="width: 32%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabel/Daftar Keluhan (Simulasi Real-time) -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+                <h4 class="text-lg font-bold text-gray-900">Log Laporan Fasilitas Terkini</h4>
+                <button class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1.5 px-4 rounded-lg font-medium transition-colors">Lihat Semua Laporan</button>
+            </div>
+            
+            <!-- List Container -->
+            <div class="space-y-3" id="ui-alerts">
+                <!-- Data akan di-generate oleh JavaScript di bawah -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Script Logika Simulasi Data -->
+    <script>
+        // Fungsi format Rupiah
+        const formatRupiah = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+
+        // Database Simulasi Keluhan
+        const lokasiToilet = ["Gedung A - Fakultas Teknik", "Gedung B - Perpustakaan", "Gedung C - Kantin Pusat", "Gedung Rektorat", "Area Parkir Utama"];
+        const masalahToilet = ["Air mati total", "Sabun cuci tangan habis", "Lantai licin/tergenang air", "Pintu tidak bisa dikunci", "Tisu habis", "Lampu mati"];
+
+        // Variabel awal metrik
+        let currentUsers = 124;
+        let currentIncome = 850000;
+        let currentTransactions = 142;
+
+        function updateWaktu() {
+            const now = new Date();
+            document.getElementById('waktu-update').innerText = now.toLocaleTimeString('id-ID');
+        }
+
+        function generateRandomAlerts() {
+            const alertBox = document.getElementById('ui-alerts');
+            alertBox.innerHTML = ''; 
+            
+            // Generate 2 sampai 4 laporan acak
+            const jumlahLaporan = Math.floor(Math.random() * 3) + 2; 
+            document.getElementById('ui-reports').innerText = jumlahLaporan;
+
+            for(let i=0; i<jumlahLaporan; i++) {
+                const acakLokasi = lokasiToilet[Math.floor(Math.random() * lokasiToilet.length)];
+                const acakMasalah = masalahToilet[Math.floor(Math.random() * masalahToilet.length)];
+                
+                // Menentukan tingkat keparahan (merah atau kuning)
+                const isCritical = (acakMasalah.includes("Air") || acakMasalah.includes("Pintu"));
+                const colorStyle = isCritical ? 'bg-red-50 border-red-100' : 'bg-yellow-50 border-yellow-100';
+                const textStyle = isCritical ? 'text-red-700' : 'text-yellow-700';
+                const badgeStyle = isCritical ? 'bg-red-600' : 'bg-yellow-500';
+
+                alertBox.innerHTML += `
+                    <div class="p-4 border rounded-xl flex justify-between items-center ${colorStyle} hover:shadow-sm transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="${badgeStyle} w-2 h-10 rounded-full"></div>
+                            <div>
+                                <p class="text-base font-bold ${textStyle}">${acakLokasi}</p>
+                                <p class="text-sm text-gray-600 mt-0.5">Keluhan: <span class="font-medium text-gray-800">${acakMasalah}</span></p>
+                            </div>
+                        </div>
+                        <button class="text-sm bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg font-medium shadow-sm transition-colors cursor-pointer">
+                            Tandai Selesai ✓
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function updateDashboard() {
+            // Update Waktu
+            updateWaktu();
+
+            // 1. Fluktuasi Pengguna Aktif (naik/turun 1-5 orang)
+            currentUsers += Math.floor(Math.random() * 11) - 5;
+            if(currentUsers < 10) currentUsers = 15; // Jangan sampai minus
+            document.getElementById('ui-users').innerText = currentUsers;
+
+            // 2. Simulasi Transaksi QRIS Bertambah
+            if(Math.random() > 0.6) { // 40% kemungkinan ada transaksi baru per detik
+                currentIncome += 2000; 
+                currentTransactions += 1;
+            }
+            document.getElementById('ui-qris').innerText = formatRupiah(currentIncome);
+            document.getElementById('ui-transaksi').innerText = currentTransactions + " Transaksi hari ini";
+
+            // 3. Update Bar CPU secara acak (20% - 85%)
+            const cpu = Math.floor(Math.random() * 65) + 20;
+            document.getElementById('ui-cpu').innerText = cpu + '%';
+            const cpuBar = document.getElementById('ui-cpu-bar');
+            cpuBar.style.width = cpu + '%';
+            
+            // Merubah warna bar CPU jika > 75%
+            if (cpu > 75) {
+                cpuBar.className = 'bg-red-500 h-2 rounded-full transition-all duration-700 ease-out';
+            } else if (cpu > 50) {
+                cpuBar.className = 'bg-yellow-400 h-2 rounded-full transition-all duration-700 ease-out';
+            } else {
+                cpuBar.className = 'bg-green-500 h-2 rounded-full transition-all duration-700 ease-out';
+            }
+
+            // 4. Acak laporan fasilitas (setiap 3 kali update fungsi berjalan)
+            if(Math.random() > 0.7) {
+                generateRandomAlerts();
+            }
+        }
+
+        // --- Inisialisasi Pertama ---
+        generateRandomAlerts();
+        updateWaktu();
+        
+        // --- Jalankan Update Setiap 2.5 Detik ---
+        setInterval(updateDashboard, 2500);
+
+    </script>
+</body>
+</html>
